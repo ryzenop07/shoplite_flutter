@@ -6,6 +6,9 @@ class Product {
   final String description;
   final String category;
   final double rating;
+  final int stock;
+  final double discountPercentage;
+  final List<String> images;
 
   Product({
     required this.id,
@@ -15,7 +18,13 @@ class Product {
     required this.description,
     required this.category,
     required this.rating,
+    required this.stock,
+    required this.discountPercentage,
+    required this.images,
   });
+
+  double get discountedPrice =>
+      price - (price * discountPercentage / 100);
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
@@ -26,6 +35,9 @@ class Product {
       description: json['description'],
       category: json['category'],
       rating: (json['rating'] as num).toDouble(),
+      stock: json['stock'] ?? 0,
+      discountPercentage: (json['discountPercentage'] as num).toDouble(),
+      images: List<String>.from(json['images'] ?? []),
     );
   }
 }
